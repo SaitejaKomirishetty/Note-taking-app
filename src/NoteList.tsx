@@ -78,57 +78,68 @@ const NoteList = ({
                     </Stack>
                 </Col>
             </Row>
-            <Form>
-                <Row className='mb-4'>
-                    <Col>
-                        <Form.Group controlId='title'>
-                            <Form.Label>Title</Form.Label>
-                            <Form.Control
-                                type='text'
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId='tags'>
-                            <Form.Label>Tags</Form.Label>
-                            <ReactSelect
-                                value={selectedTags.map((tag) => {
-                                    return { label: tag.label, value: tag.id };
-                                })}
-                                options={availableTags.map((tag) => {
-                                    return { label: tag.label, value: tag.id };
-                                })}
-                                onChange={(tags) => {
-                                    setSelectedTags(
-                                        tags.map((tag) => {
-                                            return {
-                                                label: tag.label,
-                                                id: tag.value,
-                                            };
-                                        })
-                                    );
-                                }}
-                                isMulti
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Form>
-            <Row xs={1} sm={2} lg={3} xl={4} className='gap-3'>
-                {filteredNotes.map((note) => {
-                    return (
-                        <Col key={note.id}>
-                            <NoteCard
-                                id={note.id}
-                                title={note.title}
-                                tags={note.tags}
-                            />
+            <div className=' border border-dark rounded-5 p-5 h-100'>
+                <Form>
+                    <Row className='mb-4'>
+                        <Col sm='auto' className='align-items-center justify-content-center'>
+                            <h2>Search</h2>
                         </Col>
-                    );
-                })}
-            </Row>
+                        <Col>
+                            <Form.Group controlId='title'>
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control
+                                    type='text'
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col>
+                            <Form.Group controlId='tags'>
+                                <Form.Label>Tags</Form.Label>
+                                <ReactSelect
+                                    value={selectedTags.map((tag) => {
+                                        return {
+                                            label: tag.label,
+                                            value: tag.id,
+                                        };
+                                    })}
+                                    options={availableTags.map((tag) => {
+                                        return {
+                                            label: tag.label,
+                                            value: tag.id,
+                                        };
+                                    })}
+                                    onChange={(tags) => {
+                                        setSelectedTags(
+                                            tags.map((tag) => {
+                                                return {
+                                                    label: tag.label,
+                                                    id: tag.value,
+                                                };
+                                            })
+                                        );
+                                    }}
+                                    isMulti
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                </Form>
+                <Row xs={1} sm={2} lg={3} xl={4} className='gap-3'>
+                    {filteredNotes.map((note) => {
+                        return (
+                            <Col key={note.id}>
+                                <NoteCard
+                                    id={note.id}
+                                    title={note.title}
+                                    tags={note.tags}
+                                />
+                            </Col>
+                        );
+                    })}
+                </Row>
+            </div>
             <EditTagsModal
                 availableTags={availableTags}
                 show={editTagsModalIsOpen}
